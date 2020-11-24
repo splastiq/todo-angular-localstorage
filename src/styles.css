@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@media (prefers-color-scheme: dark) {
+    :root {
+      background-color: #fff;
+      filter: invert(100%);
+    }
+  
+    * {
+      background-color: inherit;
+    }
+  
+    img:not([src*=".svg"]) {
+      filter: invert(100%);
+    }
+  }
+  
+  html,
+  body {
+    height: 100%;
+  }
+  

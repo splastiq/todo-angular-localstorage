@@ -1,0 +1,13 @@
+.completed {
+  text-decoration: line-through;
+}
+
+.container {
+  max-width: 400px;
+  min-width: 200px;
+}
+
+input.form-control:focus {
+  box-shadow: inset 0 0 0 #ddd;
+  border-color: #aaa;
+}
