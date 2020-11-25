@@ -22,6 +22,15 @@ export class DataService {
 
   private items = this.state;
 
+  get getLengthOfDoneItems() {
+    return this.items.filter((item: { done: boolean; }) => item.done === true).length;
+
+  }
+
+  get getItemsLength() {
+    return this.items.length;
+  }
+
   get getItems() {
     return this.items;
   }
@@ -58,6 +67,6 @@ export class DataService {
 
   save(): void {
     localStorage.setItem("state", JSON.stringify(this.items));
-    console.log(JSON.parse(localStorage.getItem("state")));
+    // console.log(JSON.parse(localStorage.getItem("state")));
   }
 }

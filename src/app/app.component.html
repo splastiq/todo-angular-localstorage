@@ -1,55 +1,43 @@
 <section class="container user-select-none">
   <h1 class="display-4 my-3">My ToDos</h1>
+  <div class="mb-3" *ngIf="getItemsLength">
+    <small class="filter-link" (click)="filter='all'" [ngClass]="{'active': filter === 'all'}">all:
+      {{getItemsLength}}, </small>
+    <small class="filter-link" (click)="filter='completed'" [ngClass]="{'active': filter === 'completed'}">completed:
+      {{getDoneItemsLength}}, </small>
+    <small class="filter-link" (click)="filter='uncompleted'"
+      [ngClass]="{'active': filter === 'uncompleted'}">uncompleted: {{getItemsLength - getDoneItemsLength}}, </small>
+    <small>done: {{getPersentageOfDoneItems | percent}}, </small>
+  </div>
   <form [formGroup]="form" (ngSubmit)="addItem()">
     <div class="input-group mb-3">
       <input type="text" class="form-control" formControlName="title" />
-      <button class="btn btn-outline-secondary" type="submit">Add</button>
+      <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-plus"></i></button>
     </div>
   </form>
   <ul class="list-group list-group-flush">
-    <li
-      *ngFor="let item of getItems()"
-      class="list-group-item d-flex justify-content-between mb-2"
-    >
+    <li *ngFor="let item of this.getItems" class="list-group-item d-flex justify-content-between">
       <div>
-        <input
-          class="mr-2"
-          type="checkbox"
-          [(ngModel)]="item.done"
-          (change)="save()"
-        />
-        <span
-          *ngIf="!item.edit; else editingTodo"
-          class="title"
-          (dblclick)="editItem(item)"
-          [ngClass]=" { 'completed' : item.done } "
-          >{{item.title}}</span
-        >
+        <input class="mr-2" type="checkbox" [(ngModel)]="item.done" (change)="save()" />
+        <span *ngIf="!item.edit; else editingTodo" class="title" (dblclick)="editItem(item)"
+          [ngClass]=" { 'completed' : item.done } ">{{item.title}}</span>
         <ng-template #editingTodo>
-          <input
-            class="wht-border"
-            type="text"
-            [(ngModel)]="item.title"
-            (blur)="doneEdit(item)"
-            (keyup.enter)="doneEdit(item)"
-            autofocus
-          />
+          <input class="wht-border" type="text" [(ngModel)]="item.title" (blur)="doneEdit(item)"
+            (keyup.enter)="doneEdit(item)" autofocus />
         </ng-template>
       </div>
-      <button
-        class="btn btn-sm btn-light float-right"
-        (click)="deleteItem(item.id)"
-      >
-      <i class="fas fa-times text-black-50"></i>
+      <button class="btn btn-sm btn-light float-right" (click)="deleteItem(item.id)">
+        <i class="fas fa-times text-black-50"></i>
       </button>
     </li>
   </ul>
-  <button class="btn btn-sm btn-light" (click)="deleteCompleted()">
-    delete completed
+  <button *ngIf="getDoneItemsLength" class="btn btn-sm btn-light" (click)="deleteCompleted()">
+    <i class="fas fa-trash-alt mr-1"></i> delete completed items
   </button>
-  <div class="info  bg-light p-2 mt-3">
-    <small
-      >If you want to edit the item of the list try to double click on it!</small
-    >
+  <div class="info bg-light p-2 mt-3">
+    <small *ngIf="getItemsLength"><i class="fas fa-info-circle mr-1"></i> If you want to edit the item of the list try to
+      double click on it!<br /><i class="fas fa-info-circle mr-1"></i> To filter the items by category click on the same links on the top of the app.</small>
+    <small *ngIf="!getItemsLength"><i class="fas fa-info-circle mr-1"></i> Add some item to keep track of completed
+      tasks!</small>
   </div>
 </section>

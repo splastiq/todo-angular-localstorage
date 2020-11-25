@@ -18,3 +18,11 @@ input.form-control:focus {
   margin: 0;
   outline: none;
 }
+
+.filter-link {
+  cursor: pointer;
+}
+
+.active {
+  color: tomato;
+}
