@@ -27,6 +27,7 @@
         >
         <ng-template #editingTodo>
           <input
+            class="wht-border"
             type="text"
             [(ngModel)]="item.title"
             (blur)="doneEdit(item)"
@@ -36,17 +37,17 @@
         </ng-template>
       </div>
       <button
-        class="btn btn-sm btn-outline-danger float-right"
+        class="btn btn-sm btn-light float-right"
         (click)="deleteItem(item.id)"
       >
-        del
+      <i class="fas fa-times text-black-50"></i>
       </button>
     </li>
   </ul>
   <button class="btn btn-sm btn-light" (click)="deleteCompleted()">
     delete completed
   </button>
-  <div class="info text-black-50 bg-light p-2 mt-3">
+  <div class="info  bg-light p-2 mt-3">
     <small
       >If you want to edit the item of the list try to double click on it!</small
     >
