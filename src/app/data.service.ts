@@ -6,6 +6,7 @@ class Item {
   done: boolean;
   id: string;
   edit: boolean;
+
   constructor(title: string) {
     (this.title = title),
       (this.done = false),
@@ -23,8 +24,7 @@ export class DataService {
   private items = this.state;
 
   get getLengthOfDoneItems() {
-    return this.items.filter((item: { done: boolean; }) => item.done === true).length;
-
+    return this.items.filter((item) => item.done).length;
   }
 
   get getItemsLength() {
@@ -36,7 +36,7 @@ export class DataService {
   }
 
   addItem(item: string): void {
-    this.items.push(new Item(item));
+    this.items = [...this.items, new Item(item)];
     this.save();
   }
 
@@ -67,6 +67,5 @@ export class DataService {
 
   save(): void {
     localStorage.setItem("state", JSON.stringify(this.items));
-    // console.log(JSON.parse(localStorage.getItem("state")));
   }
 }

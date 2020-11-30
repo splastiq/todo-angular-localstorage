@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between" >
+    <div>
+        <input class="mr-2" type="checkbox" [(ngModel)]="item.done" (change)="save()" />
+        <span *ngIf="!item.edit; else editingTodo" class="title" (dblclick)="editItem(item)"
+            [ngClass]=" { 'completed' : item.done } ">{{item.title}}</span>
+        <ng-template #editingTodo>
+            <input class="wht-border" type="text" [(ngModel)]="item.title" (blur)="doneEdit(item)"
+                (keyup.enter)="doneEdit(item)" autofocus />
+        </ng-template>
+    </div>
+    <button class="btn btn-sm btn-light float-right" (click)="deleteItem(item.id)">
+        <i class="fas fa-times text-black-50"></i>
+    </button>
+</div>

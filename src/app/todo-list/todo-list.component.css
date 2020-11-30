@@ -1,0 +1,23 @@
+.completed {
+  text-decoration: line-through;
+}
+
+input.form-control:focus {
+  box-shadow: inset 0 0 0 #ddd;
+  border-color: #aaa;
+}
+
+.wht-border {
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+.filter-link {
+  cursor: pointer;
+}
+
+.active {
+  color: tomato;
+}
