@@ -1,7 +1,3 @@
-.completed {
-  text-decoration: line-through;
-}
-
 input.form-control:focus {
   box-shadow: inset 0 0 0 #ddd;
   border-color: #aaa;
