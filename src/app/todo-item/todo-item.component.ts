@@ -18,19 +18,19 @@ export class TodoItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save() {
+  save(): void {
     this.saveState.emit();
   }
 
-  editItem(item) {
+  editItem(item): void {
     this.editingItem.emit(item);
   }
 
-  doneEdit(item) {
+  doneEdit(item): void {
     this.doneEditing.emit(item);
   }
 
-  deleteItem(id) {
+  deleteItem(id): void {
     this.deletingIteam.emit(id);
   }
 

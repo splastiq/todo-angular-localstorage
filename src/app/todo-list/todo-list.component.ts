@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from "../data.service";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { DataService } from '../data.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 enum Filter {
   all = 'all',
@@ -12,7 +12,7 @@ const filtersMap = {
   [Filter.all]: () => true,
   [Filter.comp]: item => item.done,
   [Filter.uncomp]: item => !item.done
-}
+};
 
 @Component({
   selector: 'app-todo-list',
@@ -28,19 +28,19 @@ export class TodoListComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      title: ""
+      title: ''
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.filter = Filter.all;
   }
 
-  get items() {
-    return this.dataService.getItems.filter(filtersMap[this.filter])
+  get items(): Array<any> {
+    return this.dataService.getItems.filter(filtersMap[this.filter]);
   }
 
-  addItem() {
+  addItem(): void {
     if (this.form.value.title.trim().length === 0) {
       this.form.reset();
       return;
@@ -49,39 +49,39 @@ export class TodoListComponent implements OnInit {
     this.form.reset();
   }
 
-  doneEdit(item: { edit: boolean }) {
+  doneEdit(item: { edit: boolean }): void {
     this.dataService.doneEdit(item);
   }
 
-  editItem(item: { edit: boolean }) {
+  editItem(item: { edit: boolean }): void  {
     this.dataService.editItem(item);
   }
 
-  deleteItem(id: string) {
+  deleteItem(id: string): void  {
     this.dataService.deleteItem(id);
   }
 
-  deleteCompleted() {
+  deleteCompleted(): void  {
     this.dataService.deleteCompleted();
   }
 
-  completeItem(item: { done: boolean }) {
+  completeItem(item: { done: boolean }): void  {
     this.dataService.completeItem(item);
   }
 
-  save() {
+  save(): void  {
     this.dataService.save();
   }
 
-  get getPersentageOfDoneItems() {
+  get getPersentageOfDoneItems(): number {
     return this.dataService.getLengthOfDoneItems / this.dataService.getItemsLength;
   }
 
-  get getDoneItemsLength() {
+  get getDoneItemsLength(): number {
     return this.dataService.getLengthOfDoneItems;
   }
 
-  get getItemsLength() {
+  get getItemsLength(): number {
     return this.dataService.getItemsLength;
   }
 }

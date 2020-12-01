@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { v4 as uuid } from "uuid";
+import { Injectable } from '@angular/core';
+import { v4 as uuid } from 'uuid';
 
 class Item {
   title: string;
@@ -17,21 +17,21 @@ class Item {
 
 @Injectable()
 export class DataService {
-  state = localStorage.getItem("state")
-    ? JSON.parse(localStorage.getItem("state"))
+  state = localStorage.getItem('state')
+    ? JSON.parse(localStorage.getItem('state'))
     : [];
 
   private items = this.state;
 
-  get getLengthOfDoneItems() {
+  get getLengthOfDoneItems(): number {
     return this.items.filter((item) => item.done).length;
   }
 
-  get getItemsLength() {
+  get getItemsLength(): number {
     return this.items.length;
   }
 
-  get getItems() {
+  get getItems(): Array<Item> {
     return this.items;
   }
 
@@ -45,27 +45,27 @@ export class DataService {
     this.save();
   }
 
-  deleteCompleted() {
+  deleteCompleted(): void {
     this.items = this.items.filter(item => item.done === false);
     this.save();
   }
 
-  editItem(item: { edit: boolean }): void {
+  editItem(item): void {
     item.edit = true;
     this.save();
   }
 
-  doneEdit(item: { edit: boolean }) {
+  doneEdit(item): void {
     item.edit = false;
     this.save();
   }
 
-  completeItem(item: { done: boolean }) {
+  completeItem(item): void {
     item.done = !item.done;
     this.save();
   }
 
   save(): void {
-    localStorage.setItem("state", JSON.stringify(this.items));
+    localStorage.setItem('state', JSON.stringify(this.items));
   }
 }
