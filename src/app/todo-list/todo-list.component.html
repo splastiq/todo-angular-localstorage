@@ -1,12 +1,12 @@
-<div class="mb-3" *ngIf="getItemsLength">
+<div class="mb-3" *ngIf="countOfTodoItems">
     <small class="filter-link" (click)="filter='all'" [ngClass]="{'active': filter === 'all'}">all:
-        {{getItemsLength}}, </small>
+        {{countOfTodoItems}}, </small>
     <small class="filter-link" (click)="filter='completed'" [ngClass]="{'active': filter === 'completed'}">completed:
-        {{getDoneItemsLength}}, </small>
+        {{countOfCompletedTodoItems}}, </small>
     <small class="filter-link" (click)="filter='uncompleted'"
-        [ngClass]="{'active': filter === 'uncompleted'}">uncompleted: {{getItemsLength - getDoneItemsLength}},
+        [ngClass]="{'active': filter === 'uncompleted'}">uncompleted: {{countOfTodoItems - countOfCompletedTodoItems}},
     </small>
-    <small>done: {{getPersentageOfDoneItems | percent}}, </small>
+    <small>done: {{ countOfCompletedTodoItems / countOfTodoItems | percent}}, </small>
 </div>
 <form [formGroup]="form" (ngSubmit)="addItem()">
     <div class="input-group mb-3">
@@ -15,18 +15,18 @@
     </div>
 </form>
 <div class="list-group list-group-flush">
-    <app-todo-item *ngFor="let item of this.items" class="list-group-item " [item]="item" (saveState)="save()"
-        (editingItem)="editItem($event)" (doneEditing)="doneEdit($event)" (deletingIteam)="deleteItem($event)">
+    <app-todo-item *ngFor="let item of todos" class="list-group-item " [item]="item"
+        (editingItem)="editItem($event)" (doneEditing)="doneEdit($event, item.id)" (deletingIteam)="deleteItem($event)" (completingIteam)="completeItem($event)">
     </app-todo-item>
 </div>
-<button *ngIf="getDoneItemsLength" class="btn btn-sm btn-light" (click)="deleteCompleted()">
+<button *ngIf="countOfCompletedTodoItems" class="btn btn-sm btn-light" (click)="deleteCompleted()">
     <i class="fas fa-trash-alt mr-1"></i> delete completed items
 </button>
 <div class="info bg-light p-2 mt-3">
-    <small *ngIf="getItemsLength"><i class="fas fa-info-circle mr-1"></i> If you want to edit the item of the list
+    <small *ngIf="countOfTodoItems"><i class="fas fa-info-circle mr-1"></i> If you want to edit the item of the list
         try to
         double click on it!<br /><i class="fas fa-info-circle mr-1"></i> To filter the items by category click on
         the same links on the top of the app.</small>
-    <small *ngIf="!getItemsLength"><i class="fas fa-info-circle mr-1"></i> Add some item to keep track of completed
+    <small *ngIf="!countOfTodoItems"><i class="fas fa-info-circle mr-1"></i> Add some item to keep track of completed
         tasks!</small>
 </div>

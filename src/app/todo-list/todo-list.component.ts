@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+// import { filter, map } from 'rxjs/operators';
+
+import { select, Store } from '@ngrx/store';
+import { TodoCreateAction, TodoDeleteAction, TodoCompleteAction, TodoEditAction, TodoStopEditingAction, TodoDeleteCompletedAction } from '../store/todo.actions';
+import { todoListSelector } from '../store/todo.selectors';
 
 enum Filter {
   all = 'all',
@@ -21,11 +25,15 @@ const filtersMap = {
 })
 
 export class TodoListComponent implements OnInit {
+  countOfTodoItems: number;
+  countOfCompletedTodoItems: number;
   form: FormGroup;
   filter: Filter = Filter.all;
+  todoItems;
+
   constructor(
-    private dataService: DataService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store$: Store
   ) {
     this.form = this.formBuilder.group({
       title: ''
@@ -33,11 +41,21 @@ export class TodoListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filter = Filter.all;
+
+    // this.todoItems$ = this.store$.pipe(
+    //   select(todoListSelector),
+    //   map(arr => arr.filter(filtersMap[this.filter]))
+    // );
+
+    this.store$.pipe(select(todoListSelector)).subscribe(todos => {
+      this.todoItems = todos;
+      this.countOfTodoItems = todos.length;
+      this.countOfCompletedTodoItems = todos.filter((item: any) => item.done).length;
+    });
   }
 
-  get items(): Array<any> {
-    return this.dataService.getItems.filter(filtersMap[this.filter]);
+  get todos(): any[] {
+    return this.todoItems.filter(filtersMap[this.filter]);
   }
 
   addItem(): void {
@@ -45,43 +63,27 @@ export class TodoListComponent implements OnInit {
       this.form.reset();
       return;
     }
-    this.dataService.addItem(this.form.value.title.trim());
+    this.store$.dispatch(new TodoCreateAction({ title: this.form.value.title.trim() }));
     this.form.reset();
   }
 
-  doneEdit(item: { edit: boolean }): void {
-    this.dataService.doneEdit(item);
+  doneEdit(title: string, id: string): void {
+    this.store$.dispatch(new TodoStopEditingAction({ title, id }));
   }
 
-  editItem(item: { edit: boolean }): void  {
-    this.dataService.editItem(item);
+  editItem(id: string): void {
+    this.store$.dispatch(new TodoEditAction({ id }));
   }
 
-  deleteItem(id: string): void  {
-    this.dataService.deleteItem(id);
+  deleteItem(id: string): void {
+    this.store$.dispatch(new TodoDeleteAction({ id }));
   }
 
-  deleteCompleted(): void  {
-    this.dataService.deleteCompleted();
+  deleteCompleted(): void {
+    this.store$.dispatch(new TodoDeleteCompletedAction());
   }
 
-  completeItem(item: { done: boolean }): void  {
-    this.dataService.completeItem(item);
-  }
-
-  save(): void  {
-    this.dataService.save();
-  }
-
-  get getPersentageOfDoneItems(): number {
-    return this.dataService.getLengthOfDoneItems / this.dataService.getItemsLength;
-  }
-
-  get getDoneItemsLength(): number {
-    return this.dataService.getLengthOfDoneItems;
-  }
-
-  get getItemsLength(): number {
-    return this.dataService.getItemsLength;
+  completeItem(id: string): void {
+    this.store$.dispatch(new TodoCompleteAction({ id }));
   }
 }
