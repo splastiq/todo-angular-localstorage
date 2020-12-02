@@ -6,32 +6,35 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./todo-item.component.css']
 })
 export class TodoItemComponent implements OnInit {
+  title = '';
 
   @Input() item;
   @Output() saveState = new EventEmitter();
   @Output() editingItem = new EventEmitter();
   @Output() doneEditing = new EventEmitter();
   @Output() deletingIteam = new EventEmitter();
+  @Output() completingIteam = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  save(): void {
-    this.saveState.emit();
+    this.title = this.item.title;
   }
 
   editItem(item): void {
     this.editingItem.emit(item);
   }
 
-  doneEdit(item): void {
-    this.doneEditing.emit(item);
+  doneEdit(): void {
+    this.doneEditing.emit(this.title);
   }
 
   deleteItem(id): void {
     this.deletingIteam.emit(id);
+  }
+
+  completeItem(id): void {
+    this.completingIteam.emit(id);
   }
 
 }

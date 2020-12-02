@@ -1,14 +1,21 @@
-<div class="d-flex justify-content-between" >
+<div class="d-flex justify-content-between">
     <div class="d-flex align-items-center">
-        <input class="mr-2" type="checkbox" [(ngModel)]="item.done" (change)="save()" />
-        <span *ngIf="!item.edit; else editingTodo" class="title" (dblclick)="editItem(item)"
-            [ngClass]=" { 'completed' : item.done } ">{{item.title}}</span>
+        <label>
+            <input class="mr-2" type="checkbox" [checked]="item.done" (click)="completeItem(item.id)" />
+            <span *ngIf="!item.edit; else editingTodo" class="title"
+                [ngClass]="{'completed': item.done}">{{item.title}}</span>
+        </label>
         <ng-template #editingTodo>
-            <input class="wht-border" type="text" [(ngModel)]="item.title" (blur)="doneEdit(item)"
+            <input class="wht-border" type="text" [(ngModel)]="title" (blur)="doneEdit(item)"
                 (keyup.enter)="doneEdit(item)" autofocus />
         </ng-template>
     </div>
-    <button class="btn btn-sm btn-light float-right" (click)="deleteItem(item.id)">
-        <i class="fas fa-times text-black-50"></i>
-    </button>
+    <div>
+        <button class="btn btn-sm btn-light mr-1" (click)="editItem(item.id)">
+            <i class="fas fa-pen text-black-50"></i>
+        </button>
+        <button class="btn btn-sm btn-light" (click)="deleteItem(item.id)">
+            <i class="fas fa-times text-black-50"></i>
+        </button>
+    </div>
 </div>
