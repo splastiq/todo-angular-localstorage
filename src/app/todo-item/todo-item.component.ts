@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
+import { Todo } from '../models/todo.model';
 
 @Component({
   selector: 'app-todo-item',
@@ -11,7 +12,7 @@ export class TodoItemComponent implements OnInit {
   faTimes = faTimes;
   faPen = faPen;
 
-  @Input() item;
+  @Input() item: Todo;
   @Output() saveState = new EventEmitter();
   @Output() editingItem = new EventEmitter();
   @Output() doneEditing = new EventEmitter();
@@ -24,19 +25,19 @@ export class TodoItemComponent implements OnInit {
     this.title = this.item.title;
   }
 
-  editItem(item): void {
-    this.editingItem.emit(item);
+  editItem(id: string): void {
+    this.editingItem.emit(id);
   }
 
   doneEdit(): void {
     this.doneEditing.emit(this.title);
   }
 
-  deleteItem(id): void {
+  deleteItem(id: string): void {
     this.deletingIteam.emit(id);
   }
 
-  completeItem(id): void {
+  completeItem(id: string): void {
     this.completingIteam.emit(id);
   }
 

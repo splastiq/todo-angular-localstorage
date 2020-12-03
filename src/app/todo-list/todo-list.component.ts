@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { select, Store } from '@ngrx/store';
 import * as todoActions from '../store/todo.actions';
+import { Todo } from '../models/todo.model';
 
 import { todoListSelector } from '../store/todo.selectors';
 import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -16,8 +17,8 @@ enum Filter {
 
 const filtersMap = {
   [Filter.all]: () => true,
-  [Filter.comp]: item => item.done,
-  [Filter.uncomp]: item => !item.done
+  [Filter.comp]: (item: Todo) => item.done,
+  [Filter.uncomp]: (item: Todo) => !item.done
 };
 
 @Component({
@@ -31,7 +32,7 @@ export class TodoListComponent implements OnInit {
   countOfCompletedTodoItems: number;
   form: FormGroup;
   filter: Filter = Filter.all;
-  todoItems;
+  todoItems: Todo[];
   // todoItems$;
   faInfoCircle = faInfoCircle;
   faPlus = faPlus;
@@ -55,11 +56,11 @@ export class TodoListComponent implements OnInit {
     this.store$.pipe(select(todoListSelector)).subscribe(todos => {
       this.todoItems = todos;
       this.countOfTodoItems = todos.length;
-      this.countOfCompletedTodoItems = todos.filter((item: any) => item.done).length;
+      this.countOfCompletedTodoItems = todos.filter((item: Todo) => item.done).length;
     });
   }
 
-  get todos(): any[] {
+  get todos(): Todo[] {
     return this.todoItems.filter(filtersMap[this.filter]);
   }
 
