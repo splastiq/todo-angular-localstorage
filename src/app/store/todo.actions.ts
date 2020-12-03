@@ -1,47 +1,39 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
 export enum todoActionsType {
-    create = '[TODO] create todo item',
-    delete = '[TODO] delete todo item',
-    complete = '[TODO] complete todo item',
-    edit = '[TODO] edit todo item',
-    stopEditing = '[TODO] stop editing todo item',
-    deleteCompleted = '[TODO] delete completed todo items',
+    createTodo = '[TODO] create todo item',
+    deleteTodo = '[TODO] delete todo item',
+    completeTodo = '[TODO] complete todo item',
+    editTodo = '[TODO] edit todo item',
+    stopEditingTodo = '[TODO] stop editing todo item',
+    deleteCompletedTodos = '[TODO] delete completed todo items',
 }
 
-export class TodoCreateAction implements Action {
-    readonly type = todoActionsType.create;
-    constructor(public payload: { title: string }) { }
-}
+export const createTodo = createAction(
+    todoActionsType.createTodo,
+    props<{ title: string }>()
+);
 
-export class TodoDeleteAction implements Action {
-    readonly type = todoActionsType.delete;
-    constructor(public payload: { id: string }) { }
-}
+export const deleteTodo = createAction(
+    todoActionsType.deleteTodo,
+    props<{ id: string }>()
+);
 
-export class TodoCompleteAction implements Action {
-    readonly type = todoActionsType.complete;
-    constructor(public payload: { id: string }) { }
-}
+export const completeTodo = createAction(
+    todoActionsType.completeTodo,
+    props<{ id: string }>()
+);
 
-export class TodoEditAction implements Action {
-    readonly type = todoActionsType.edit;
-    constructor(public payload: { id: string }) { }
-}
+export const editTodo = createAction(
+    todoActionsType.editTodo,
+    props<{ id: string }>()
+);
 
-export class TodoStopEditingAction implements Action {
-    readonly type = todoActionsType.stopEditing;
-    constructor(public payload: { title: string, id: string }) { }
-}
+export const stopEditingTodo = createAction(
+    todoActionsType.stopEditingTodo,
+    props<{ title: string, id: string }>()
+);
 
-export class TodoDeleteCompletedAction implements Action {
-    readonly type = todoActionsType.deleteCompleted;
-}
-
-export type todoActions =
-    TodoCreateAction |
-    TodoDeleteAction |
-    TodoCompleteAction |
-    TodoEditAction |
-    TodoStopEditingAction |
-    TodoDeleteCompletedAction;
+export const deleteCompletedTodos = createAction(
+    todoActionsType.deleteCompletedTodos
+);

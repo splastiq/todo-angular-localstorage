@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 // import { filter, map } from 'rxjs/operators';
 
 import { select, Store } from '@ngrx/store';
-import { TodoCreateAction, TodoDeleteAction, TodoCompleteAction, TodoEditAction, TodoStopEditingAction, TodoDeleteCompletedAction } from '../store/todo.actions';
+import * as todoActions from '../store/todo.actions';
+
 import { todoListSelector } from '../store/todo.selectors';
 import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,6 +32,7 @@ export class TodoListComponent implements OnInit {
   form: FormGroup;
   filter: Filter = Filter.all;
   todoItems;
+  // todoItems$;
   faInfoCircle = faInfoCircle;
   faPlus = faPlus;
 
@@ -66,27 +68,27 @@ export class TodoListComponent implements OnInit {
       this.form.reset();
       return;
     }
-    this.store$.dispatch(new TodoCreateAction({ title: this.form.value.title.trim() }));
+    this.store$.dispatch(todoActions.createTodo({ title: this.form.value.title.trim() }));
     this.form.reset();
   }
 
   doneEdit(title: string, id: string): void {
-    this.store$.dispatch(new TodoStopEditingAction({ title, id }));
+    this.store$.dispatch(todoActions.stopEditingTodo({ title, id }));
   }
 
   editItem(id: string): void {
-    this.store$.dispatch(new TodoEditAction({ id }));
+    this.store$.dispatch(todoActions.editTodo({ id }));
   }
 
   deleteItem(id: string): void {
-    this.store$.dispatch(new TodoDeleteAction({ id }));
+    this.store$.dispatch(todoActions.deleteTodo({ id }));
   }
 
   deleteCompleted(): void {
-    this.store$.dispatch(new TodoDeleteCompletedAction());
+    this.store$.dispatch(todoActions.deleteCompletedTodos());
   }
 
   completeItem(id: string): void {
-    this.store$.dispatch(new TodoCompleteAction({ id }));
+    this.store$.dispatch(todoActions.completeTodo({ id }));
   }
 }
