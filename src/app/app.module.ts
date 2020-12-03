@@ -13,6 +13,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { todoReducer, TODO_REDUCER_NODE } from './store/todo.reducer';
 import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { CommonModule } from '@angular/common';
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreModule.forFeature(TODO_REDUCER_NODE, todoReducer),
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ],
   declarations: [AppComponent, TodoListComponent, TodoItemComponent, HeaderComponent],
   bootstrap: [AppComponent],

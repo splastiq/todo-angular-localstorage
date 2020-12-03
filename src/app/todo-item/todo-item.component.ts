@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-todo-item',
@@ -7,6 +8,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TodoItemComponent implements OnInit {
   title = '';
+  faTimes = faTimes;
+  faPen = faPen;
 
   @Input() item;
   @Output() saveState = new EventEmitter();

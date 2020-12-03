@@ -11,11 +11,11 @@
         </ng-template>
     </div>
     <div>
-        <button class="btn btn-sm btn-light mr-1" (click)="editItem(item.id)">
-            <i class="fas fa-pen text-black-50"></i>
+        <button class="btn btn-sm btn-light text-black-50 mr-1" (click)="editItem(item.id)">
+            <fa-icon [icon]="faPen"></fa-icon>
         </button>
-        <button class="btn btn-sm btn-light" (click)="deleteItem(item.id)">
-            <i class="fas fa-times text-black-50"></i>
+        <button class="btn btn-sm btn-light text-black-50" (click)="deleteItem(item.id)">
+            <fa-icon [icon]="faTimes"></fa-icon>
         </button>
     </div>
 </div>

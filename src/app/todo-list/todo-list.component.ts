@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { TodoCreateAction, TodoDeleteAction, TodoCompleteAction, TodoEditAction, TodoStopEditingAction, TodoDeleteCompletedAction } from '../store/todo.actions';
 import { todoListSelector } from '../store/todo.selectors';
+import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 enum Filter {
   all = 'all',
@@ -30,6 +31,8 @@ export class TodoListComponent implements OnInit {
   form: FormGroup;
   filter: Filter = Filter.all;
   todoItems;
+  faInfoCircle = faInfoCircle;
+  faPlus = faPlus;
 
   constructor(
     private formBuilder: FormBuilder,

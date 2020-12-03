@@ -11,7 +11,7 @@
 <form [formGroup]="form" (ngSubmit)="addItem()">
     <div class="input-group mb-3">
         <input type="text" class="form-control" formControlName="title" />
-        <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-plus"></i></button>
+        <button class="btn btn-outline-secondary" type="submit"><fa-icon [icon]="faPlus"></fa-icon></button>
     </div>
 </form>
 <div class="list-group list-group-flush">
@@ -23,10 +23,9 @@
     <i class="fas fa-trash-alt mr-1"></i> delete completed items
 </button>
 <div class="info bg-light p-2 mt-3">
-    <small *ngIf="countOfTodoItems"><i class="fas fa-info-circle mr-1"></i> If you want to edit the item of the list
+    <small *ngIf="countOfTodoItems"><fa-icon [icon]="faInfoCircle"></fa-icon> If you want to edit the item of the list
         try to
-        double click on it!<br /><i class="fas fa-info-circle mr-1"></i> To filter the items by category click on
+        double click on it!<br /><fa-icon [icon]="faInfoCircle"></fa-icon> To filter the items by category click on
         the same links on the top of the app.</small>
-    <small *ngIf="!countOfTodoItems"><i class="fas fa-info-circle mr-1"></i> Add some item to keep track of completed
-        tasks!</small>
+    <small *ngIf="!countOfTodoItems"><fa-icon [icon]="faInfoCircle"></fa-icon> Add some item to start tracking your tasks!</small>
 </div>
