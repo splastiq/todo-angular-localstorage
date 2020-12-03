@@ -16,19 +16,19 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    StoreModule.forFeature(TODO_REDUCER_NODE, todoReducer),
-    CommonModule,
-    FontAwesomeModule
-  ],
-  declarations: [AppComponent, TodoListComponent, TodoItemComponent, HeaderComponent],
-  bootstrap: [AppComponent],
-  providers: [AppComponent]
+	imports: [
+		BrowserModule,
+		FormsModule,
+		ReactiveFormsModule,
+		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+		StoreModule.forRoot({}, {}),
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+		StoreModule.forFeature(TODO_REDUCER_NODE, todoReducer),
+		CommonModule,
+		FontAwesomeModule,
+	],
+	declarations: [AppComponent, TodoListComponent, TodoItemComponent, HeaderComponent],
+	bootstrap: [AppComponent],
+	providers: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

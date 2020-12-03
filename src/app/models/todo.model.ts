@@ -1,6 +1,6 @@
-export interface Todo {
-    title: string;
-    done?: boolean;
-    id?: string;
-    edit?: boolean;
+export interface ITodo {
+	title: string;
+	done?: boolean;
+	id?: string;
+	edit?: boolean;
 }
