@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-import { select, Store } from '@ngrx/store';
+import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Store, Select } from '@ngxs/store';
 import * as todoActions from '../store/todo.actions';
 import { ITodo } from '../models/todo.model';
-
-import { todoListSelector } from '../store/todo.selectors';
-import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { TodosState } from '../store/todo.state';
+import { Observable } from 'rxjs';
 
 enum Filter {
 	all = 'all',
@@ -32,9 +31,10 @@ export class TodoListComponent implements OnInit {
 	public form: FormGroup;
 	public filter: Filter = Filter.all;
 	public todoItems: ITodo[];
-	// todoItems$;
 	public faInfoCircle = faInfoCircle;
 	public faPlus = faPlus;
+
+	// @Select(TodosState) public count$: Observable<number>;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -47,16 +47,10 @@ export class TodoListComponent implements OnInit {
 
 	public ngOnInit(): void {
 
-		// tslint:disable-next-line: no-commented-code
-		// this.todoItems$ = this.store$.pipe(
-		//   select(todoListSelector),
-		//   map(arr => arr.filter(filtersMap[this.filter]))
-		// );
-
-		this.store$.pipe(select(todoListSelector)).subscribe(todos => {
-			this.todoItems = todos;
-			this.countOfTodoItems = todos.length;
-			this.countOfCompletedTodoItems = todos.filter((item: ITodo) => item.done).length;
+		this.store$.subscribe(state => {
+			this.todoItems = state.myTodos.todoList;
+			this.countOfTodoItems = this.todoItems.length;
+			this.countOfCompletedTodoItems = this.todoItems.filter((item: ITodo) => item.done).length;
 		});
 	}
 
@@ -65,31 +59,32 @@ export class TodoListComponent implements OnInit {
 	}
 
 	public addItem(): void {
-		if (this.form.value.title.trim().length === 0) {
+		const title = this.form.value.title;
+		if (!title || title.trim().length === 0) {
 			this.form.reset();
 			return;
 		}
-		this.store$.dispatch(todoActions.createTodo({ title: this.form.value.title.trim() }));
+		this.store$.dispatch(new todoActions.CreateTodo(title.trim()));
 		this.form.reset();
 	}
 
 	public doneEdit(title: string, id: string): void {
-		this.store$.dispatch(todoActions.stopEditingTodo({ title, id }));
+		this.store$.dispatch(new todoActions.StopEditingTodo(title, id));
 	}
 
 	public editItem(id: string): void {
-		this.store$.dispatch(todoActions.editTodo({ id }));
+		this.store$.dispatch(new todoActions.EditTodo(id));
 	}
 
 	public deleteItem(id: string): void {
-		this.store$.dispatch(todoActions.deleteTodo({ id }));
+		this.store$.dispatch(new todoActions.DeleteTodo(id));
 	}
 
 	public deleteCompleted(): void {
-		this.store$.dispatch(todoActions.deleteCompletedTodos());
+		this.store$.dispatch(new todoActions.DeleteCompletedTodos());
 	}
 
 	public completeItem(id: string): void {
-		this.store$.dispatch(todoActions.completeTodo({ id }));
+		this.store$.dispatch(new todoActions.CompleteTodo(id));
 	}
 }
