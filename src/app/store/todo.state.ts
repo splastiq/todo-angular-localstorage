@@ -1,9 +1,14 @@
 import { State, Action } from '@ngxs/store';
+import { Injectable } from '@angular/core';
 import * as todoActions from './todo.actions';
 import { v4 as uuid } from 'uuid';
 import { ITodo } from '../models/todo.model';
 
-const initialState = localStorage.getItem('state')
+export interface ITodoState {
+	todoList: ITodo[];
+}
+
+const initialState: ITodoState = localStorage.getItem('state')
 		? JSON.parse(localStorage.getItem('state'))
 		: { todoList: [] };
 
@@ -16,10 +21,10 @@ const saveInLocalStorage = (state: ITodo[]): void => {
 	defaults: initialState,
 })
 
+@Injectable()
 export class TodosState {
 	@Action(todoActions.CreateTodo)
-	// tslint:disable-next-line: typedef
-	private createTodo({ getState, setState }, payload: any) {
+	private createTodo({ getState, setState }: any, payload: ITodo): void {
 		const state = getState();
 		const newState = {
 			...state, todoList: [
@@ -37,8 +42,7 @@ export class TodosState {
 	}
 
 	@Action(todoActions.DeleteTodo)
-	// tslint:disable-next-line: typedef
-	private deleteTodo({ getState, setState }, payload: any) {
+	private deleteTodo({ getState, setState }: any, payload: ITodo): void {
 		const state = getState();
 		const newState = {
 			...state, todoList: state.todoList.filter((item: ITodo) => item.id !== payload.id),
@@ -48,8 +52,7 @@ export class TodosState {
 	}
 
 	@Action(todoActions.CompleteTodo)
-	// tslint:disable-next-line: typedef
-	private completeTodo({ getState, setState }, payload: any) {
+	private completeTodo({ getState, setState }: any, payload: ITodo): void {
 		const state = getState();
 		const newState = {
 			...state, todoList: state.todoList.map((item: ITodo) => item.id === payload.id ? { ...item, done: !item.done } : item),
@@ -59,8 +62,7 @@ export class TodosState {
 	}
 
 	@Action(todoActions.EditTodo)
-	// tslint:disable-next-line: typedef
-	private editTodo({ getState, setState }, payload: any) {
+	private editTodo({ getState, setState }: any, payload: ITodo): void {
 		const state = getState();
 		const newState = {
 			...state, todoList: state.todoList.map((item: ITodo) => item.id === payload.id ? { ...item, edit: true } : item),
@@ -70,8 +72,7 @@ export class TodosState {
 	}
 
 	@Action(todoActions.StopEditingTodo)
-	// tslint:disable-next-line: typedef
-	private stopEditingTodo({ getState, setState }, payload: any) {
+	private stopEditingTodo({ getState, setState }: any, payload: ITodo): void {
 		const state = getState();
 		const newState = {
 			...state, todoList: state.todoList.map((item: ITodo) =>
@@ -82,8 +83,7 @@ export class TodosState {
 	}
 
 	@Action(todoActions.DeleteCompletedTodos)
-	// tslint:disable-next-line: typedef
-	private deleteCompletedTodos({ getState, setState }, payload: any) {
+	private deleteCompletedTodos({ getState, setState }: any): void {
 		const state = getState();
 		const newState = {
 			...state, todoList: state.todoList.filter((item: ITodo) => !item.done),
