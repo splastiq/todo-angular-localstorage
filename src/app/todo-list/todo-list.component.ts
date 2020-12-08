@@ -1,23 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Store, Select } from '@ngxs/store';
 import * as todoActions from '../store/todo.actions';
 import { ITodo } from '../models/todo.model';
 import { TodosState } from '../store/todo.state';
 import { Observable } from 'rxjs';
-
-enum Filter {
-	all = 'all',
-	comp = 'completed',
-	uncomp = 'uncompleted',
-}
-
-const filtersMap = {
-	[Filter.all]: () => true,
-	[Filter.comp]: (item: ITodo) => item.done,
-	[Filter.uncomp]: (item: ITodo) => !item.done,
-};
 
 @Component({
 	selector: 'app-todo-list',
@@ -25,37 +13,35 @@ const filtersMap = {
 	styleUrls: ['./todo-list.component.css'],
 })
 
-export class TodoListComponent implements OnInit {
-	public countOfTodoItems: number;
-	public countOfCompletedTodoItems: number;
+export class TodoListComponent {
 	public form: FormGroup;
-	public filter: Filter = Filter.all;
-	public todoItems: ITodo[];
+	public filter = 'all';
 	public faInfoCircle = faInfoCircle;
 	public faPlus = faPlus;
+	public faTimes = faTimes;
+	public faTrash = faTrash;
+	public term = '';
 
-	// @Select(TodosState) public count$: Observable<number>;
+	@Select(TodosState.allTodos)
+	public allTodos$: Observable<any>;
+
+	@Select(TodosState.lengthOfTodos)
+	public lengthOfTodos$: Observable<number>;
+
+	@Select(TodosState.lengthOfCompletedTodos)
+	public lengthOfCompletedTodos$: Observable<number>;
+
+	@Select(TodosState.lengthOfUncompletedTodos)
+	public lengthOfUncompletedTodos$: Observable<number>;
+
+	@Select(TodosState.persentageOfCompletedTodos)
+	public persentageOfCompletedTodos$: Observable<number>;
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private store$: Store,
 	) {
-		this.form = this.formBuilder.group({
-			title: '',
-		});
-	}
-
-	public ngOnInit(): void {
-
-		this.store$.subscribe(state => {
-			this.todoItems = state.myTodos.todoList;
-			this.countOfTodoItems = this.todoItems.length;
-			this.countOfCompletedTodoItems = this.todoItems.filter((item: ITodo) => item.done).length;
-		});
-	}
-
-	get todos(): ITodo[] {
-		return this.todoItems.filter(filtersMap[this.filter]);
+		this.form = this.formBuilder.group({ title: '' });
 	}
 
 	public addItem(): void {

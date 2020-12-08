@@ -16,3 +16,9 @@
   border: 1px solid #fff;
   padding: 5px;
 }
+
+.btn-transperent {
+	background-color: transparent;
+	color: #ddd;
+	border: none;
+}

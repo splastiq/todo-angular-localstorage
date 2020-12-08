@@ -10,3 +10,20 @@ input.form-control:focus {
 .active {
   color: tomato;
 }
+
+.custom-border {
+	border: none;
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0;
+}
+
+.btn-transperent {
+	background-color: transparent;
+	color: #eee;
+	border: none;
+}
+
+.form-control::placeholder {
+	color: #ddd;
+	opacity: 1;
+}

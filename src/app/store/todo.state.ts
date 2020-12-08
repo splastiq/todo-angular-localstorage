@@ -1,4 +1,4 @@
-import { State, Action } from '@ngxs/store';
+import { State, Action, Selector } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import * as todoActions from './todo.actions';
 import { v4 as uuid } from 'uuid';
@@ -23,6 +23,31 @@ const saveInLocalStorage = (state: ITodo[]): void => {
 
 @Injectable()
 export class TodosState {
+	@Selector()
+	public static allTodos(state: any): any {
+	  return state.todoList;
+	}
+
+	@Selector()
+	public static lengthOfTodos(state: ITodoState): number {
+	  return state.todoList.length;
+	}
+
+	@Selector()
+	public static lengthOfCompletedTodos(state: ITodoState): number {
+	  return state.todoList.filter(item => item.done).length;
+	}
+
+	@Selector()
+	public static lengthOfUncompletedTodos(state: ITodoState): number {
+	  return state.todoList.length - state.todoList.filter(item => item.done).length;
+	}
+
+	@Selector()
+	public static persentageOfCompletedTodos(state: ITodoState): number {
+	  return state.todoList.filter(item => item.done).length / state.todoList.length;
+	}
+
 	@Action(todoActions.CreateTodo)
 	private createTodo({ getState, setState }: any, payload: ITodo): void {
 		const state = getState();

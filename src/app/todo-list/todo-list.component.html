@@ -1,31 +1,44 @@
-<div class="mb-3" *ngIf="countOfTodoItems">
-    <small class="filter-link" (click)="filter='all'" [ngClass]="{'active': filter === 'all'}">all:
-        {{countOfTodoItems}}, </small>
-    <small class="filter-link" (click)="filter='completed'" [ngClass]="{'active': filter === 'completed'}">completed:
-        {{countOfCompletedTodoItems}}, </small>
-    <small class="filter-link" (click)="filter='uncompleted'"
-        [ngClass]="{'active': filter === 'uncompleted'}">uncompleted: {{countOfTodoItems - countOfCompletedTodoItems}},
-    </small>
-    <small>done: {{ countOfCompletedTodoItems / countOfTodoItems | percent}}, </small>
+<div class="mb-3" *ngIf="lengthOfTodos$ | async">
+	<small class="filter-link" (click)="filter='all'" [ngClass]="{'active': filter === 'all'}">all:
+		{{lengthOfTodos$ | async}}, </small>
+	<small class="filter-link" (click)="filter='completed'" [ngClass]="{'active': filter === 'completed'}">completed:
+		{{lengthOfCompletedTodos$ | async}}, </small>
+	<small class="filter-link" (click)="filter='inprogress'" [ngClass]="{'active': filter === 'inprogress'}">uncompleted:
+		{{lengthOfUncompletedTodos$ | async}},
+	</small>
+	<small>done: {{ persentageOfCompletedTodos$ | async | percent}}, </small>
 </div>
 <form [formGroup]="form" (ngSubmit)="addItem()">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" formControlName="title"/>
-        <button class="btn btn-outline-secondary" type="submit"><fa-icon [icon]="faPlus"></fa-icon></button>
-    </div>
+	<div class="input-group mb-1">
+		<input type="text" class="form-control" formControlName="title" placeholder="todo" />
+		<button class="btn btn-outline-secondary" type="submit">
+			<fa-icon [icon]="faPlus"></fa-icon>
+		</button>
+	</div>
 </form>
-<div class="list-group list-group-flush">
-    <app-todo-item *ngFor="let item of todos" class="list-group-item " [item]="item"
-        (editingItem)="editItem($event)" (doneEditing)="doneEdit($event, item.id)" (deletingIteam)="deleteItem($event)" (completingIteam)="completeItem($event)">
-    </app-todo-item>
+<div class="input-group mb-3 border-bottom">
+	<input type="text" class="form-control border-0" [(ngModel)]="term" placeholder="search" />
+	<button class="btn btn-sm btn-transperent" type="button" (click)="term=''">
+		<fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+	</button>
 </div>
-<button *ngIf="countOfCompletedTodoItems" class="btn btn-sm btn-light" (click)="deleteCompleted()">
-    <i class="fas fa-trash-alt mr-1"></i> delete completed items
+<div class="list-group list-group-flush mb-3">
+	<app-todo-item *ngFor="let item of allTodos$ | async | filter:term | filter:filter" class="list-group-item " [item]="item"
+		(editingItem)="editItem($event)" (doneEditing)="doneEdit($event, item.id)" (deletingIteam)="deleteItem($event)"
+		(completingIteam)="completeItem($event)">
+	</app-todo-item>
+</div>
+<button *ngIf="lengthOfCompletedTodos$ | async" class="btn btn-sm btn-light" (click)="deleteCompleted()">
+	<fa-icon [icon]="faTrash" class="mr-1"></fa-icon> delete completed items
 </button>
 <div class="info bg-light p-2 mt-3">
-    <small *ngIf="countOfTodoItems"><fa-icon [icon]="faInfoCircle"></fa-icon> If you want to edit the item of the list
-        try to
-        double click on it!<br /><fa-icon [icon]="faInfoCircle"></fa-icon> To filter the items by category click on
-        the same links on the top of the app.</small>
-    <small *ngIf="!countOfTodoItems"><fa-icon [icon]="faInfoCircle"></fa-icon> Add some item to start tracking your tasks!</small>
+	<small *ngIf="lengthOfTodos$ | async; else startMessage">
+		<fa-icon [icon]="faInfoCircle" class="mr-1"></fa-icon> To filter the items by category click on
+		the same links on the top of the app.
+	</small>
+	<ng-template #startMessage>
+		<small >
+			<fa-icon [icon]="faInfoCircle" class="mr-1"></fa-icon> Add some item to start tracking your tasks!
+		</small>
+	</ng-template>
 </div>
