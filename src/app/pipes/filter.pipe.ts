@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { ITodo } from '../models/todo.model';
 
 enum Filter {
 	all = 'all',
@@ -8,13 +9,13 @@ enum Filter {
 
 const filtersMap = {
 	[Filter.all]: () => true,
-	[Filter.completed]: (item: any) => item.done,
-	[Filter.inprogress]: (item: any) => !item.done,
+	[Filter.completed]: (item: ITodo) => item.done,
+	[Filter.inprogress]: (item: ITodo) => !item.done,
 };
 
 @Pipe({ name: 'filter' })
 export class FilterPipe implements PipeTransform {
-	public transform(items: any[], searchText: any): any[] {
+	public transform(items: ITodo[], searchText: any): ITodo[] {
 		if (!items) { return []; }
 		if (!searchText) { return items; }
 		searchText = searchText.toLocaleLowerCase();

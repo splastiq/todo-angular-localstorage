@@ -1,12 +1,12 @@
 <div class="mb-3" *ngIf="lengthOfTodos$ | async">
 	<small class="filter-link" (click)="filter='all'" [ngClass]="{'active': filter === 'all'}">all:
-		{{lengthOfTodos$ | async}}, </small>
+		{{lengthOfTodos$ | async}}</small>
 	<small class="filter-link" (click)="filter='completed'" [ngClass]="{'active': filter === 'completed'}">completed:
-		{{lengthOfCompletedTodos$ | async}}, </small>
-	<small class="filter-link" (click)="filter='inprogress'" [ngClass]="{'active': filter === 'inprogress'}">uncompleted:
-		{{lengthOfUncompletedTodos$ | async}},
+		{{lengthOfCompletedTodos$ | async}}</small>
+	<small class="filter-link" (click)="filter='inprogress'" [ngClass]="{'active': filter === 'inprogress'}">inprogress:
+		{{lengthOfUncompletedTodos$ | async}}
 	</small>
-	<small>done: {{ persentageOfCompletedTodos$ | async | percent}}, </small>
+	<small class="filter-link pointer-none">done: {{ persentageOfCompletedTodos$ | async | percent}}</small>
 </div>
 <form [formGroup]="form" (ngSubmit)="addItem()">
 	<div class="input-group mb-1">
