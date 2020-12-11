@@ -23,7 +23,7 @@ export class TodoListComponent {
 	public term = '';
 
 	@Select(TodosState.allTodos)
-	public allTodos$: Observable<any>;
+	public allTodos$: Observable<ITodo[]>;
 
 	@Select(TodosState.lengthOfTodos)
 	public lengthOfTodos$: Observable<number>;

@@ -13,6 +13,18 @@ input.form-control:focus {
   font-size: 12px;
 }
 
+.red {
+  background-color: tomato;
+}
+
+.yellow {
+  background-color: rgb(248, 218, 46);
+}
+
+.green {
+  background-color: rgb(109, 197, 91);
+}
+
 .pointer-none {
   cursor: default;
 }
