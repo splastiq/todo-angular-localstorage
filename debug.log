@@ -5,3 +5,13 @@
 [1211/182925.181:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
 [1211/182925.181:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
 [1211/184446.843:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1214/113733.205:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1214/130745.719:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1214/131919.275:ERROR:process_memory_win.cc(73)] ReadMemory at 0x19b47b12740 of 72 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[1214/131919.275:WARNING:pe_image_annotations_reader.cc(135)] could not read annotations list object in C:\Program Files\Google\Chrome\Application\87.0.4280.88\chrome_elf.dll
+[1214/131919.276:ERROR:process_memory_win.cc(73)] ReadMemory at 0x19b47b4f390 of 72 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[1214/131919.276:WARNING:pe_image_annotations_reader.cc(135)] could not read annotations list object in C:\Program Files\Google\Chrome\Application\87.0.4280.88\chrome.dll
+[1214/134158.081:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1214/134350.281:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[1214/134350.281:ERROR:exception_snapshot_win.cc(99)] thread ID 14112 not found in process
+[1214/134350.281:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)

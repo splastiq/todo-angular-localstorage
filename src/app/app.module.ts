@@ -14,6 +14,7 @@ import { TodosState } from './store/todo.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { AutofocusFixModule } from 'ngx-autofocus-fix';
 import { FilterPipe } from './pipes/filter.pipe';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
 	imports: [
@@ -26,6 +27,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 		FontAwesomeModule,
 		NgxsModule.forRoot([TodosState], { developmentMode: !environment.production }),
 		NgxsReduxDevtoolsPluginModule.forRoot(),
+		SweetAlert2Module.forRoot(),
 	],
 	declarations: [
 		AppComponent,

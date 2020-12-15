@@ -22,6 +22,10 @@ describe('Testing TodoItemComponent', () => {
         component.item = { id: 'test-1-id-1', title: 'Test Todo 1', done: true, edit: false };
     });
 
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
     it('should display title of item', () => {
         fixture.detectChanges();
         const span = fixture.nativeElement.querySelector('.title');

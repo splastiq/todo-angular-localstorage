@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { faInfoCircle, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { faInfoCircle, faPlus, faTimes, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { Store, Select } from '@ngxs/store';
 import * as todoActions from '../store/todo.actions';
 import { ITodo } from '../models/todo.model';
@@ -20,7 +20,9 @@ export class TodoListComponent {
 	public faPlus = faPlus;
 	public faTimes = faTimes;
 	public faTrash = faTrash;
+	public faQuestionCircle = faQuestionCircle;
 	public term = '';
+	public showInfo = true;
 
 	@Select(TodosState.allTodos)
 	public allTodos$: Observable<ITodo[]>;
@@ -41,7 +43,9 @@ export class TodoListComponent {
 		private formBuilder: FormBuilder,
 		private store$: Store,
 	) {
-		this.form = this.formBuilder.group({ title: '' });
+		this.form = this.formBuilder.group({
+			title: ['', [Validators.required, Validators.minLength(2)]],
+		});
 	}
 
 	public addItem(): void {
@@ -63,14 +67,24 @@ export class TodoListComponent {
 	}
 
 	public deleteItem(id: string): void {
+		if (!confirm('Are you sure to delete?')) {
+			return;
+		} 
 		this.store$.dispatch(new todoActions.DeleteTodo(id));
 	}
 
-	public deleteCompleted(): void {
+	public deleteCompleted(): void {		
+		if (!confirm('Are you sure to delete all completed items?')) {
+			return;
+		} 
 		this.store$.dispatch(new todoActions.DeleteCompletedTodos());
 	}
 
 	public completeItem(id: string): void {
 		this.store$.dispatch(new todoActions.CompleteTodo(id));
+	}
+
+	public toggleVisibleInfoOnClick() {
+		this.showInfo = !this.showInfo;
 	}
 }

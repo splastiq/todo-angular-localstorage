@@ -5,12 +5,13 @@ input.form-control:focus {
 
 .filter-link {
   cursor: pointer;
-  background-color: #ddd;
   border-radius: 20px;
+  border: 1px solid #ddd;
   padding: 2px 10px 4px 10px;
   margin-right: 5px;
   display: inline-block;
   font-size: 12px;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .red {
@@ -26,17 +27,20 @@ input.form-control:focus {
 }
 
 .pointer-none {
+  border-color: #fff;
   cursor: default;
 }
 
 .active {
-  color: tomato;
+  color: #fff;
+  border-color: rgb(118, 169, 251);
+  background-color: rgb(118, 169, 251);
 }
 
 .custom-border {
 	border: none;
-    border-bottom: 1px solid #ced4da;
-    border-radius: 0;
+  border-bottom: 1px solid #ced4da;
+  border-radius: 0;
 }
 
 .btn-transperent {

@@ -26,8 +26,10 @@
     "@ngrx/store": "^10.1.0",
     "@ngrx/store-devtools": "^10.1.0",
     "@ngxs/store": "^3.7.1",
+    "@sweetalert2/ngx-sweetalert2": "^8.1.1",
     "ngx-autofocus-fix": "^1.0.4",
     "rxjs": "~6.6.0",
+    "sweetalert2": "^10.12.5",
     "tslib": "^2.0.0",
     "uuid": "^8.3.1",
     "zone.js": "~0.10.2"

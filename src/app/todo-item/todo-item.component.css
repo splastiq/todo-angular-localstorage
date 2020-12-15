@@ -19,6 +19,22 @@
 
 .btn-transperent {
 	background-color: transparent;
-	color: #ddd;
+	color: #bbb;
 	border: none;
+}
+
+.item-row {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+}
+
+.control-buttons {
+  display: none;
+}
+
+.item-row:hover .control-buttons {
+  display: block;
+  position: relative;
+  z-index: 2;
 }

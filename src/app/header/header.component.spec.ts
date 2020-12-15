@@ -16,6 +16,10 @@ describe('Testing HeaderComponent', () => {
         h1 = fixture.nativeElement.querySelector('h1');
     });
 
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
     it('should display original title', () => {
         fixture.detectChanges();
         expect(h1.textContent).toContain(component.title);
