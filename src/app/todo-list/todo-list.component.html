@@ -10,24 +10,8 @@
 	</small>
 	<small class="filter-link pointer-none">done: {{persentageOfCompletedTodos$ | async | percent}}</small>
 </div>
-<form [formGroup]="form" (ngSubmit)="addItem()">
-	<div class="input-group mb-1">
-		<input #spy id="title" type="text" class="input-todo-field form-control" formControlName="title"
-			placeholder="todo" required />
-		<button *ngIf="spy.value" class="btn btn-outline-secondary" type="submit">
-			<fa-icon [icon]="faPlus"></fa-icon>
-		</button>
-	</div>
-	<!-- <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
-		<div *ngIf="title.errors.required">
-			title is required.
-		</div>
-		<div *ngIf="title.errors.minlength">
-			title must be at least 2 characters long.
-		</div>
-	</div> -->
-</form>
-<div class="input-group mb-3 border-bottom">
+<app-todo-input-form (addItemOnSubmit)="addItem($event)" ></app-todo-input-form>
+<div *ngIf="lengthOfTodos$ | async" class="input-group mb-3 border-bottom">
 	<input type="text" class="form-control border-0" [(ngModel)]="term" placeholder="search" />
 	<button *ngIf="term" class="btn btn-sm btn-transperent" type="button" (click)="term=''">
 		<fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
@@ -43,7 +27,7 @@
 	<fa-icon [icon]="faTrash" class="mr-1"></fa-icon> delete completed items
 </button>
 <div class="info mt-3" (click)="toggleVisibleInfoOnClick()">
-	<div *ngIf="showInfo" class="bg-light p-2">
+	<div *ngIf="showInfo" class="bg-light px-2 py-1">
 		<small *ngIf="lengthOfTodos$ | async; else startMessage">
 			<fa-icon [icon]="faInfoCircle" class="mr-1"></fa-icon> To edit or delete the item hover it.<br>
 			<fa-icon [icon]="faInfoCircle" class="mr-1"></fa-icon> To filter the items by category click on

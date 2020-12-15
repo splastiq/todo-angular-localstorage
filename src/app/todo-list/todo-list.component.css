@@ -53,3 +53,7 @@ input.form-control:focus {
 	color: #ddd;
 	opacity: 1;
 }
+
+::ng-deep .selected {
+  color:red;
+}

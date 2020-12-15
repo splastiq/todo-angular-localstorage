@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faInfoCircle, faPlus, faTimes, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { Store, Select } from '@ngxs/store';
 import * as todoActions from '../store/todo.actions';
@@ -14,7 +13,6 @@ import { Observable } from 'rxjs';
 })
 
 export class TodoListComponent {
-	public form: FormGroup;
 	public filter = 'all';
 	public faInfoCircle = faInfoCircle;
 	public faPlus = faPlus;
@@ -39,23 +37,10 @@ export class TodoListComponent {
 	@Select(TodosState.persentageOfCompletedTodos)
 	public persentageOfCompletedTodos$: Observable<number>;
 
-	constructor(
-		private formBuilder: FormBuilder,
-		private store$: Store,
-	) {
-		this.form = this.formBuilder.group({
-			title: ['', [Validators.required, Validators.minLength(2)]],
-		});
-	}
+	constructor( private store$: Store ) { }
 
-	public addItem(): void {
-		const title = this.form.value.title;
-		if (!title || title.trim().length === 0) {
-			this.form.reset();
-			return;
-		}
-		this.store$.dispatch(new todoActions.CreateTodo(title.trim()));
-		this.form.reset();
+	public addItem(title: string): void {
+		this.store$.dispatch(new todoActions.CreateTodo(title));
 	}
 
 	public doneEdit(title: string, id: string): void {
